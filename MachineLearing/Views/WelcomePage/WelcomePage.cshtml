@@ -1,0 +1,137 @@
+﻿
+
+@model MachineLearing.Models.UserQuery 
+
+    @{
+        ViewBag.Title = "WelcomePage";
+    }
+
+    <html>
+    <head>
+        <meta name="viewport" content="width=device-width" />
+        <title>WelcomePage</title>
+        <link href="@Url.Content("~/Content/WelcomeSheet.css")" rel="stylesheet" type="text/css" />
+        <script type="text/javascript" src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+        <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+        <script type="text/javascript">
+            function showGrid() {
+                var x = document.getElementById("SuccessGrid");
+                if (x.style.display === "none") {
+                    x.style.display = "block";
+                } 
+            }
+
+        </script>
+
+        <style>
+            .text_control_Query{
+                width:300px;
+                height:100px;
+            }
+            .dropdown_box{
+            width:250px;
+            }
+        </style>
+
+    </head>
+    <body>
+        @using (Html.BeginForm("WelcomePage", "WelcomePage", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <div class="container">
+
+
+                <div class="row">
+                    <div class="col-md-12 col-xs-12 col-sm-12 text-center"style="padding-top:2px;text-shadow:2px 2px 2px silver;color:#346BC3;">
+
+                        <h1>Ask Your Query</h1><br /><br />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-2 col-xs-2 col-sm-2"></div>
+                    <div class="col-md-4 col-xs-4 col-sm-4">
+                        <div class="row">
+                            <div class="col-md-12 col-xs-12 col-sm-12">
+                                <div>
+                                    @Html.LabelFor(m => m.ThirdParty)
+                                    @Html.EnumDropDownListFor(s => s.ThirdParty,
+                                  "- Please select your ThirdParty -",
+                                  new { @class = "dropdown_box" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top:50px;">
+                            <div class="col-md-12 col-xs-12 col-sm-12">
+                                <div>
+                                    @Html.LabelFor(m => m.Integration)
+                                    @Html.EnumDropDownListFor(s => s.Integration,
+                                  "- Please select Video/Alarm -",
+                                  new { @class = "dropdown_box" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xs-6 col-sm-6">
+                        <div class="row">
+                            <div class="col-md-1 col-xs-1 col-sm-1" >
+                                @Html.LabelFor(m => m.Query)
+                            </div>
+                            <div class="col-md-6 col-xs-6 col-sm-6">
+                                @Html.TextAreaFor(s => s.Query,
+                            new
+                            {
+                                @class = "text_control_Query",
+                                placeholder = "Type a Question.."
+                            })
+                            </div>
+
+
+                            </div>
+                    </div>
+                </div>
+
+                <div class="row" style="margin:20px;">
+                    <div class="col-md-2 col-xs-2 col-sm-2"></div>
+                    <div class="col-md-8 col-xs-8 col-sm-8 text-right">
+                        <div>
+                            <button type="submit"  class="btn btn-primary" style="width:110px; color:white; font:bold;">Submit</button>
+                        </div>
+                    </div>
+                </div>
+
+                @*<div>
+                    @Html.ActionLink("Click here", // <-- Link text
+                     "StudentView", // <-- Action Method Name
+                     "Student", // <-- Controller Name
+                     null, // <-- Route value
+                     null // <-- htmlArguments
+                     )
+                </div>*@
+        </div>     
+     
+    }
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 col-xs-12 col-sm-12 text-center" >
+                    <center>
+                        <table>
+                            <tr><td><div id="SuccessGrid" style="border:1px solid lightblue; padding:10px;">
+                                @{Html.RenderAction("_ResponseGridView"); }
+                            </div></td></tr>
+                                <tr><td><div><h2 style="color:maroon;">
+                                                @ViewBag.ErrorMsg
+                                            </h2>
+                                    </div></td></tr>
+                        </table>
+                      
+                    </center>
+                </div>
+            </div>
+        </div>
+
+</body>
+</html>
+
+
+
+

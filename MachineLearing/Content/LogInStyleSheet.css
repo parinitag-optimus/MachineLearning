@@ -1,0 +1,24 @@
+﻿fieldset { 
+    display: block;
+    margin-left: 5px;
+    margin-right: 5px;
+    padding-top: 2px;
+    padding-bottom: 0.625em;
+    padding-left: 1em;
+    padding-right: 1em;
+    border:hidden;
+    width:400px;
+    height:200px;
+}
+
+
+
+form{
+    text-align:center;
+    padding-top: 2px;
+    padding-bottom: 0.625em;
+    padding-left: 1em;
+    padding-right: 1em;
+    margin-left:35%;
+    margin-top:15%;
+}

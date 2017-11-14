@@ -6,29 +6,92 @@
 
 <html>
 <head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Index</title>
+    <meta name="viewport" content="width=device-width" />   
+    <link href="@Url.Content("~/Content/LogInStyleSheet.css")" rel="stylesheet" type="text/css" />
+    <style>
+        .input-group-addon {
+            color: #346BC3;
+            background-color: #ffffff;
+        }
+        .input-group{
+            padding-bottom:10px;
+            
+        }
+
+
+    </style>
 </head>
 <body>
-        @using (Html.BeginForm("UserLogIn", "LogIn", FormMethod.Post, new { enctype = "multipart/form-data" }))
-        {
-            @Html.AntiForgeryToken()
-            <h1>Login Functionality In MVC</h1>
-            <div>
+<div class="container">
+ <center>
+     <div class="row" style="margin-top:12%;">
 
-                @if (TempData["ErrorMSG"] != null)
-                {
-                    <label style="color:maroon;"> @TempData["ErrorMSG"] </label>
-                    <br /><br />
-                }
+         <div class="col-xs-4 col-md-4 col-sm-4"></div>
+         <div class="col-xs-4 col-md-4 col-sm-4" style="border:2px solid gray; box-shadow: 5px 5px 5px #888888; border-radius:10px; height:auto;  ">
+             <div class="text-center" style="height:60px; width:100%; border-bottom:2px solid #3380FF; color:#346BC3;">
+                 <h1 style="padding-top:2px;text-shadow:2px 2px 2px silver;">User Login</h1>
+             </div>
+             <div style = "width:100%; margin-left:-170px;">
+                 @using (Html.BeginForm("UserLogIn", "LogIn", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                 {
+                    <div class="input-group" style="color:darkred; margin-top:-40px;">
 
-                @Html.TextBoxFor(s => s.UserName, new { @placeholder = "Username" })
-                <br /> <br />
-                @Html.PasswordFor(s => s.Password, new { @placeholder = "Password" })
-                <br /> <br />
-                <button type="submit">Login</button>
-            </div>
-        }
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true)
+                        @if (TempData["Message"] != null)
+                        {
+                            @*<script type="text/javascript">
+                                alert('@TempData["Message"]');
+                            </script>*@
+                            <p style="margin-left:15px; width:200px;">
+                                @TempData["Message"].ToString()
+                            </p>
+                        }
+                        
+                    </div>
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <span class="glyphicon glyphicon-user"></span>
+                            </div>
+                            @Html.TextBoxFor(s => s.UserName, new { @placeholder = "Username", @style = " height:40px; width:210px;", @CssClass = "glyphicon glyphicon-user" })  
+                           </div>
+                           <div style="margin-bottom:10px ;color:darkred; ">
+                               <span>
+                                   @Html.ValidationMessageFor(s => s.UserName)
+                               </span> 
+                           </div>
+
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <span class="glyphicon glyphicon-lock"></span>
+                            </div>
+                            @Html.PasswordFor(s => s.Password, new { @placeholder = "Password", @style = " height:40px; width:210px;", @CssClass = "glyphicon glyphicon-lock" })
+
+                        </div>
+                        <div style="color:darkred; ">
+                            <span>
+                                @Html.ValidationMessageFor(s => s.Password)
+                            </span>
+                        </div>
+                        <div>
+                            <div class="col-md-2 col-xs-2 col-sm-2"></div>
+                            <div class="col-md-8 col-xs-8 col-sm-8">
+                                <button type="submit" class="btn btn-primary" style="width:250px; margin-left:-48px; margin-top:10px;">Login</button>
+                            </div>
+                            <div class="col-md-2 col-xs-8 col-sm-8"></div>
+                        </div>
+
+                        }
+                 <br /><br />
+                    </div>
+             <br /><br />
+         </div>
+
+     </div>
+     </center>
+    <br /><br />
+</div>
+   
 </body>
 </html>
 

@@ -1,0 +1,32 @@
+﻿.form-control_ThirdParty {
+    background-color: #4CAF50;
+        height:30px;
+}
+
+.form-control_ThirdPartyLabel{
+
+}
+
+.form-control_IntrgrationLabel{
+     margin-left:500px;
+      height:30px;
+}
+
+.form-control_QueryLabel{
+
+}
+
+.form-control_Intrgration{
+     background-color: #4CAF50;
+     margin-left:100px;
+       height:30px;
+}
+.form-control_Query{
+    background-color: #4CAF50;
+    height:100px;
+    width:500px;
+}
+
+.QueryClass{
+    margin-left:100px;
+}
