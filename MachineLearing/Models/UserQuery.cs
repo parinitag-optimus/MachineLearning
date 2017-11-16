@@ -18,7 +18,8 @@ namespace MachineLearing.Models
         [Display(Name = "Query:")]
         public string Query { get; set; }
 
-        public string Response { get; set; }
+        [Display(Name = "Possible Solution:")]
+        public string PossibleSolution { get; set; }
 
         public double Score { get; set; }
 
@@ -26,6 +27,7 @@ namespace MachineLearing.Models
     }
     public enum ThirdParty
     {
+        Gallagher,
         Jacques,
         CCure
     }

@@ -9,16 +9,34 @@
     <meta name="viewport" content="width=device-width" />   
     <link href="@Url.Content("~/Content/LogInStyleSheet.css")" rel="stylesheet" type="text/css" />
     <style>
+
         .input-group-addon {
-            color: #346BC3;
-            background-color: #ffffff;
+            color: #346BC3; background-color: #ffffff;
         }
         .input-group{
-            padding-bottom:10px;
-            
+            padding-bottom:10px;            
         }
-
-
+        .btn-style{
+            width:250px; margin-left:-48px; margin-top:10px;
+        }
+        .div-box{
+            border:2px solid gray; box-shadow: 5px 5px 5px #888888; border-radius:10px; height:auto; 
+        }
+        .header-div{
+            height:60px; width:100%; border-bottom:2px solid #3380FF; color:#346BC3;
+        }
+        .header-h1{
+            padding-top:2px;text-shadow:2px 2px 2px silver;
+        }
+        .showerror-div{
+            color:red; margin-left:10%; font-size:small;
+        }
+        .invalidMsg-div{
+            color:red; margin-top:-40px;
+        }
+        .form-div{
+            width:100%; margin-left:-170px;
+        }
     </style>
 </head>
 <body>
@@ -27,14 +45,14 @@
      <div class="row" style="margin-top:12%;">
 
          <div class="col-xs-4 col-md-4 col-sm-4"></div>
-         <div class="col-xs-4 col-md-4 col-sm-4" style="border:2px solid gray; box-shadow: 5px 5px 5px #888888; border-radius:10px; height:auto;  ">
-             <div class="text-center" style="height:60px; width:100%; border-bottom:2px solid #3380FF; color:#346BC3;">
-                 <h1 style="padding-top:2px;text-shadow:2px 2px 2px silver;">User Login</h1>
+         <div class="col-xs-4 col-md-4 col-sm-4 div-box" >
+             <div class="text-center header-div" >
+                 <h1 class="header-h1">User Login</h1>
              </div>
-             <div style = "width:100%; margin-left:-170px;">
+             <div class="form-div">
                  @using (Html.BeginForm("UserLogIn", "LogIn", FormMethod.Post, new { enctype = "multipart/form-data" }))
                  {
-                    <div class="input-group" style="color:darkred; margin-top:-40px;">
+                    <div class="input-group invalidMsg-div">
 
                         @Html.AntiForgeryToken()
                         @Html.ValidationSummary(true)
@@ -53,9 +71,9 @@
                             <div class="input-group-addon">
                                 <span class="glyphicon glyphicon-user"></span>
                             </div>
-                            @Html.TextBoxFor(s => s.UserName, new { @placeholder = "Username", @style = " height:40px; width:210px;", @CssClass = "glyphicon glyphicon-user" })  
+                            @Html.TextBoxFor(s => s.UserName, new { @placeholder = "Username", @style = " height:40px; width:210px; padding:5px;", @CssClass = "glyphicon glyphicon-user text-Box" })  
                            </div>
-                           <div style="margin-bottom:10px ;color:darkred; ">
+                           <div class="showerror-div" style="margin-bottom:10px;">
                                <span>
                                    @Html.ValidationMessageFor(s => s.UserName)
                                </span> 
@@ -65,10 +83,10 @@
                             <div class="input-group-addon">
                                 <span class="glyphicon glyphicon-lock"></span>
                             </div>
-                            @Html.PasswordFor(s => s.Password, new { @placeholder = "Password", @style = " height:40px; width:210px;", @CssClass = "glyphicon glyphicon-lock" })
+                            @Html.PasswordFor(s => s.Password, new { @placeholder = "Password", @style = " height:40px; width:210px; padding:5px;", @CssClass = "glyphicon glyphicon-lock" })
 
                         </div>
-                        <div style="color:darkred; ">
+                        <div class="showerror-div">
                             <span>
                                 @Html.ValidationMessageFor(s => s.Password)
                             </span>
@@ -76,7 +94,7 @@
                         <div>
                             <div class="col-md-2 col-xs-2 col-sm-2"></div>
                             <div class="col-md-8 col-xs-8 col-sm-8">
-                                <button type="submit" class="btn btn-primary" style="width:250px; margin-left:-48px; margin-top:10px;">Login</button>
+                                <button type="submit" class="btn btn-primary btn-style" >Login</button>
                             </div>
                             <div class="col-md-2 col-xs-8 col-sm-8"></div>
                         </div>

@@ -9,16 +9,18 @@
 <script src="@Url.Content("~/Scripts/gridmvc.min.js")"></script>  
 
     <div>
-       @*@ if(Model!=null)
-        {*@
+
+        @if (Model != null)
+        {
+
              @Html.Grid(Model).Columns(columns =>
         {
             columns.Add(c => c.Id)
             .Titled("S No")
             .SetWidth(100);
 
-            columns.Add(c => c.Response)
-            .Titled("Response")
+            columns.Add(c => c.PossibleSolution)
+            .Titled("Possible Solutions")
             .SetWidth(520);
 
             columns.Add(c => c.Score)
@@ -28,7 +30,12 @@
             .Filterable(true);
 
         }).WithPaging(3).Sortable(true)
-        @*}
-         else{
-        <p>No Record Found</p>}*@
+        }
+        else
+        {
+            <center style="margin-top:10%; color:maroon; font-size:15px;">
+                @Html.Label("No Data Available")
+            </center>
+        }
         </div>
+

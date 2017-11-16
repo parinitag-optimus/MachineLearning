@@ -29,7 +29,19 @@
                 height:100px;
             }
             .dropdown_box{
-            width:250px;
+                width:250px;
+            }
+            .WPbtn{
+                width:110px; color:white; font:bold;
+            }
+            .btn-row-div{
+                margin-top:20px; margin-right:20px;
+            }
+            .askQuery-div{
+                padding-top:2px;text-shadow:2px 2px 2px silver;color:#346BC3;
+            }
+            .grid-div{
+                border:1px solid lightblue; padding:10px; margin-right:10px;
             }
         </style>
 
@@ -41,7 +53,7 @@
 
 
                 <div class="row">
-                    <div class="col-md-12 col-xs-12 col-sm-12 text-center"style="padding-top:2px;text-shadow:2px 2px 2px silver;color:#346BC3;">
+                    <div class="col-md-12 col-xs-12 col-sm-12 text-center askQuery-div">
 
                         <h1>Ask Your Query</h1><br /><br />
                     </div>
@@ -90,38 +102,43 @@
                     </div>
                 </div>
 
-                <div class="row" style="margin:20px;">
+                <div class="row btn-row-div">
                     <div class="col-md-2 col-xs-2 col-sm-2"></div>
                     <div class="col-md-8 col-xs-8 col-sm-8 text-right">
-                        <div>
-                            <button type="submit"  class="btn btn-primary" style="width:110px; color:white; font:bold;">Submit</button>
+                        <div style="margin-right:20px;">
+                            <button type="submit"  class="btn btn-primary WPbtn" >Submit</button>
                         </div>
                     </div>
                 </div>
-
-                @*<div>
-                    @Html.ActionLink("Click here", // <-- Link text
-                     "StudentView", // <-- Action Method Name
-                     "Student", // <-- Controller Name
-                     null, // <-- Route value
-                     null // <-- htmlArguments
-                     )
-                </div>*@
         </div>     
      
     }
+
         <div class="container">
             <div class="row">
                 <div class="col-md-12 col-xs-12 col-sm-12 text-center" >
                     <center>
                         <table>
-                            <tr><td><div id="SuccessGrid" style="border:1px solid lightblue; padding:10px;">
-                                @{Html.RenderAction("_ResponseGridView"); }
-                            </div></td></tr>
-                                <tr><td><div><h2 style="color:maroon;">
+                            <tr>
+                                <td>
+                                    <div>
+                                        <center>
+                                            <h4 style="color:maroon;">
+
                                                 @ViewBag.ErrorMsg
-                                            </h2>
-                                    </div></td></tr>
+                                            </h4> <br />
+                                        </center>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div id="SuccessGrid" class="grid-div" >
+                                        @{Html.RenderAction("_ResponseGridView"); }
+                                    </div>
+                                </td>
+                            </tr>
+                                
                         </table>
                       
                     </center>

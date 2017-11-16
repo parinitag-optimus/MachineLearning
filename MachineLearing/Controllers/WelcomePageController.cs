@@ -10,35 +10,67 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
+using System.Web.Security;
 
 namespace MachineLearing.Controllers
 {
     public class WelcomePageController : Controller
     {
         // GET: WelcomePage
-        static string msg = null;
+       //  bool viewDummyData = Properties.Settings.Default.ViewDummyData;
+         static string msg = null;
+         string[] possibleSolution;
+         double[] score;
+         int[] id;
+        
         ObservableCollection<UserQuery> Solution = new ObservableCollection<UserQuery>();
 
         [HttpGet]
         public ActionResult WelcomePage()
         {
+            ExpiresCache();
 
-           return View();
+            if (Session["UserName"]!=null)
+                return View();
+            else
+                return RedirectToAction("UserLogIn", "LogIn");
 
         }
         [HttpPost]
         public ActionResult WelcomePage(UserQuery q)
         {
+           ExpiresCache();
+            
             InvokeRequestResponseService(q).Wait();
-            ViewBag.ErrorMsg = msg;
-            //if (msg != null)
-            //{
-            //    Solution = null;
-            //    return PartialView("_ResponseGridView", Solution);
-            //}
-           
-            return View();
+            
 
+            if(q.ThirdParty.ToString()!=null && q.Integration.ToString() !=null && q.Query !=null)
+            {
+                FillSolution();
+            }
+            else
+            {
+                ViewBag.ErrorMsg = msg;
+            }
+
+            //if (msg != null)
+               
+            //    FillSolution();               
+            //     //Solution = null;           
+            //else
+            //{
+            //   // if (viewDummyData == false)
+            //   // {
+            //   //     FillResponse();
+            //   // }
+            //   // else
+            //  //  {
+            //        FillSolution();
+            //   // }
+           // }
+               
+
+            return View();
 
         }
 
@@ -82,8 +114,25 @@ namespace MachineLearing.Controllers
 
                 if (response.IsSuccessStatusCode)
                 {
-                     result = await response.Content.ReadAsStringAsync();
-                    Console.WriteLine("Result: {0}", result);
+                     result = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+
+                    SuccessResponse.RootObject responseRootObject = JsonConvert.DeserializeObject<MachineLearing.Models.SuccessResponse.RootObject>(result);
+                    try
+                    {
+                        int length = Convert.ToInt32(responseRootObject.Results.output1.value.ColumnNames);
+                        for (int i = 0; i < length; i++)
+                        {
+                            possibleSolution[i] = responseRootObject.Results.output1.value.ColumnNames[i];
+                            score[i] = i + 2;
+                            id[i] = i+1;
+                        }
+
+
+                      //  viewDummyData = false; //set as true to Show Dummy Data
+                    }catch(Exception ex)
+                    {
+                       // viewDummyData = true;
+                    }
                 }
                 else
                 {
@@ -97,20 +146,52 @@ namespace MachineLearing.Controllers
             
         }
 
+        private void FillResponse()
+        {
+            try
+            {
+                Session["Solution"] = null;
 
-[ChildActionOnly]
-public ActionResult _ResponseGridView()
-{
-    Solution.Add(new UserQuery { Id = 1, Response = "Add recording Interface manually in AvigilonJacques config file.", Score = 8.1 });
-    Solution.Add(new UserQuery { Id = 2, Response = "Check in the Configuration client for licensing info whether the license is expired or on the wrong location", Score = 2.5 });
-    Solution.Add(new UserQuery { Id = 3, Response = "Make the IP of system where Command Centre is installed as static", Score = 3.1 });
-    Solution.Add(new UserQuery { Id = 4, Response = "The AvigilonGallagherCCVMS dll is not installed properly. This is done manually via RegAsm.exe /codebase command.", Score = 9.4 });
-    Solution.Add(new UserQuery { Id = 5, Response = "This seems to be an issue in CCVMS framwork but we were unable to replicate the issue", Score = 2.6 });
-    Solution.Add(new UserQuery { Id = 6, Response = "Restrict the user to configure camera tile size.", Score = 1.12 });
-    Solution.Add(new UserQuery { Id = 7, Response = "Check for resolution of following steps", Score = 3.37 });
-    return PartialView(Solution);
+                for (int n = 0; n <= (id.Length - 1); n++)
+                {
+                    Solution.Add(new UserQuery { Id = id[n], PossibleSolution = possibleSolution[n], Score = score[n] });
+                }
+            }catch(Exception ex)
+            {
+                FillSolution();
+            }
+        }
 
-}
+        private void FillSolution()
+        {
+            Session["Solution"] = null;
+            
+            Solution.Add(new UserQuery { Id = 1, PossibleSolution = "Add recording Interface manually in config file.", Score = 8.1 });
+            Solution.Add(new UserQuery { Id = 2, PossibleSolution = "Check in the Configuration client for licensing info whether the license is expired or on the wrong location", Score = 2.5 });
+            Solution.Add(new UserQuery { Id = 3, PossibleSolution = "Make the IP of system where Command Centre is installed as static", Score = 3.1 });
+            Solution.Add(new UserQuery { Id = 4, PossibleSolution = "The AvigilonGallagherCCVMS dll is not installed properly. This is done manually via RegAsm.exe /codebase command.", Score = 9.4 });
+            Solution.Add(new UserQuery { Id = 5, PossibleSolution = "This seems to be an issue in CCVMS framwork but we were unable to replicate the issue", Score = 2.6 });
+            Solution.Add(new UserQuery { Id = 6, PossibleSolution = "Restrict the user to configure camera tile size.", Score = 1.12 });
+            Solution.Add(new UserQuery { Id = 7, PossibleSolution = "Check for resolution of following steps", Score = 3.37 });
+            Session["Solution"] = Solution;
+        }
+
+        [ChildActionOnly]
+        public ActionResult _ResponseGridView()
+        {
+            ObservableCollection<UserQuery> SolutionList = (ObservableCollection<UserQuery>)Session["Solution"];
+
+            return PartialView(SolutionList);
+        }
+
+        public void ExpiresCache()
+        {
+            Response.Cache.SetCacheability(HttpCacheability.NoCache);
+            Response.Cache.SetExpires(DateTime.Now.AddSeconds(-1));
+            Response.Cache.SetNoStore();
+            FormsAuthentication.SignOut();
+        }
+
     }
 }
 

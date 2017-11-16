@@ -26,11 +26,14 @@ namespace MachineLearing.Controllers
               .Any();
 
             if (isUser)
+            {
+                Session["UserName"] = u.UserName;
                 return Redirect("/WelcomePage/WelcomePage");
+            }
             else
             {
-                if(u.UserName !=null || u.Password != null)
-                TempData["Message"] = "Invalid username or password";
+                if (u.UserName != null && u.Password != null)
+                    TempData["Message"] = "Invalid username or password";
                 return View();
             }
                 
