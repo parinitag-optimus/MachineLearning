@@ -166,13 +166,13 @@ namespace MachineLearing.Controllers
         {
             Session["Solution"] = null;
             
-            Solution.Add(new UserQuery { Id = 1, PossibleSolution = "Add recording Interface manually in config file.", Score = 8.1 });
-            Solution.Add(new UserQuery { Id = 2, PossibleSolution = "Check in the Configuration client for licensing info whether the license is expired or on the wrong location", Score = 2.5 });
-            Solution.Add(new UserQuery { Id = 3, PossibleSolution = "Make the IP of system where Command Centre is installed as static", Score = 3.1 });
-            Solution.Add(new UserQuery { Id = 4, PossibleSolution = "The AvigilonGallagherCCVMS dll is not installed properly. This is done manually via RegAsm.exe /codebase command.", Score = 9.4 });
-            Solution.Add(new UserQuery { Id = 5, PossibleSolution = "This seems to be an issue in CCVMS framwork but we were unable to replicate the issue", Score = 2.6 });
-            Solution.Add(new UserQuery { Id = 6, PossibleSolution = "Restrict the user to configure camera tile size.", Score = 1.12 });
-            Solution.Add(new UserQuery { Id = 7, PossibleSolution = "Check for resolution of following steps", Score = 3.37 });
+            Solution.Add(new UserQuery { Id = 1, PossibleSolution = "Add recording Interface manually in config file.", Score = 0.3125 });
+            Solution.Add(new UserQuery { Id = 2, PossibleSolution = "Check in the Configuration client for licensing info whether the license is expired or on the wrong location", Score = 0.0625 });
+            Solution.Add(new UserQuery { Id = 3, PossibleSolution = "Make the IP of system where Command Centre is installed as static", Score = 0.1 });
+            Solution.Add(new UserQuery { Id = 4, PossibleSolution = "The AvigilonGallagherCCVMS dll is not installed properly. This is done manually via RegAsm.exe /codebase command.", Score = 0.04 });
+            Solution.Add(new UserQuery { Id = 5, PossibleSolution = "This seems to be an issue in CCVMS framwork but we were unable to replicate the issue", Score = 0.6 });
+            Solution.Add(new UserQuery { Id = 6, PossibleSolution = "Restrict the user to configure camera tile size.", Score = 0.9 });
+            Solution.Add(new UserQuery { Id = 7, PossibleSolution = "Check for resolution of following steps", Score = 0.0625 });
             Session["Solution"] = Solution;
         }
 
